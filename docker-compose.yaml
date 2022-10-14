@@ -1,0 +1,80 @@
+version: "3.8"
+
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: ./docker/php/Dockerfile
+    container_name: php
+    privileged: true
+    working_dir: /app
+    user: "www-data:www-data"
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+    networks:
+      - default
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: ./docker/nginx/Dockerfile
+    volumes:
+      - ./app://app
+    container_name: nginx
+    restart: unless-stopped
+    working_dir: /app
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php
+    networks:
+      - default
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - ./data/mongo:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=citizix
+      - MONGO_INITDB_ROOT_PASSWORD=S3cret
+    networks:
+      - default
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: unless-stopped
+    healthcheck:
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
+      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+      - ME_CONFIG_MONGODB_AUTH_USERNAME=citizix
+      - ME_CONFIG_MONGODB_AUTH_PASSWORD=S3cret
+      - ME_CONFIG_BASICAUTH_USERNAME=test
+      - ME_CONFIG_BASICAUTH_PASSWORD=test
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8081"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+    name: docker_default
