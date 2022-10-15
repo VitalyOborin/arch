@@ -61,7 +61,8 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
-        "tests": "bin/phpunit"
+        "tests": "bin/phpunit",
+        "cs-fix": "php vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix -v"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -81,6 +82,6 @@
         "symfony/phpunit-bridge": "^6.1",
         "symfony/stopwatch": "6.1.*",
         "symfony/web-profiler-bundle": "6.1.*",
-        "vimeo/psalm": "^4.26"
+        "friendsofphp/php-cs-fixer": "^3.12"
     }
 }
