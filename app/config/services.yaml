@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    env(MONGODB_URL): ''
+    env(MONGODB_DB): ''
 
 services:
     # default configuration for services in *this* file
@@ -13,12 +15,33 @@ services:
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
-    App\:
+
+    #_instanceof:
+    #    Acme\Shared\Domain\Bus\Command\CommandHandlerInterface:
+    #        tags: ['internal.command_handler']
+
+    #    Acme\Shared\Domain\Bus\Query\QueryHandlerInterface:
+    #        tags: ['internal.query_handler']
+
+    #Acme\Shared\Domain\Bus\Command\CommandBusInterface:
+    #    class: Acme\Shared\Port\Bus\Command\CommandBusInterface
+    #    arguments: [!tagged internal.command_handler]
+
+    #Acme\Shared\Domain\Bus\Query\QueryBusInterface:
+    #    class: Acme\Shared\Domain\Bus\Query\QueryBusInterface
+    #    arguments: [!tagged internal.query_handler]
+
+    Acme\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
+            - '../src/*/Domain/Entity/'
             - '../src/Kernel.php'
+    Acme\Shared\:
+        resource: '../src/Shared/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+
+    controllers:
+        namespace: Acme\
+        resource: '../src/*/Port/Http/Controller/*'
+        tags: ['controller.service_arguments']

@@ -1,14 +1,14 @@
 version: "3.8"
 
 services:
-  php:
+  app:
     build:
       context: ./
       dockerfile: ./docker/php/Dockerfile
-    container_name: php
+    container_name: app
     privileged: true
     volumes:
-      - ./app://app
+      - ./app:/app
     working_dir: /app
     user: "www-data:www-data"
     healthcheck:
@@ -24,7 +24,7 @@ services:
       context: ./
       dockerfile: ./docker/nginx/Dockerfile
     volumes:
-      - ./app://app
+      - ./app:/app
     container_name: nginx
     restart: unless-stopped
     working_dir: /app
@@ -33,7 +33,7 @@ services:
       - "80:80"
       - "443:443"
     links:
-      - php
+      - app
     networks:
       - default
 
@@ -52,39 +52,15 @@ services:
     networks:
       - default
 
-  mongo-express:
-    image: mongo-express
-    container_name: mongo-express
-    restart: unless-stopped
-    healthcheck:
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    environment:
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_PORT=27017
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=false
-      - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
-      - ME_CONFIG_MONGODB_AUTH_USERNAME=citizix
-      - ME_CONFIG_MONGODB_AUTH_PASSWORD=S3cret
-      - ME_CONFIG_BASICAUTH_USERNAME=test
-      - ME_CONFIG_BASICAUTH_PASSWORD=test
-    depends_on:
-      - mongo
-    ports:
-      - "8080:8081"
-    networks:
-      - default
-
   redis:
     image: 'bitnami/redis:latest'
     container_name: redis
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     depends_on:
-      - php
+      - app
     links:
-      - php
+      - app
     networks:
       - default
 

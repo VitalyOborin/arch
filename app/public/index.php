@@ -1,6 +1,8 @@
 <?php
 
-use App\Kernel;
+declare(strict_types=1);
+
+use Acme\Kernel;
 
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
