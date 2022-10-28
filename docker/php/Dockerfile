@@ -20,12 +20,14 @@ RUN docker-php-ext-configure intl && docker-php-ext-install bcmath intl zip gd o
 RUN pecl install amqp-1.11.0
 RUN pecl install igbinary
 RUN pecl install mongodb-1.14.1
+RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN pecl install -o -f redis --enable-redis-igbinary=yes --enable-redis-lzf=no --enable-redis-zstd=no \
         &&  rm -rf /tmp/pear \
         &&  docker-php-ext-enable redis igbinary mongodb
 RUN wget https://getcomposer.org/installer -O - -q | php -- --install-dir=/bin --filename=composer --quiet
 ADD ./docker/php/php.ini /usr/local/etc/php/php.ini
 ADD ./docker/php/php-fpm.www.conf /usr/local/etc/php-fpm.d/www.conf
+ADD ./docker/php/config/ /usr/local/etc/php/conf.d/
 
 COPY --chown=www-data:www-data ["app", "/app"]
 
