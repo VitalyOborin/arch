@@ -1,8 +1,9 @@
 framework:
     messenger:
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
-
+        enabled: true
+        buses:
+            event:
+                default_middleware: allow_no_handlers
         transports:
             command: 'in-memory://'
             query: 'in-memory://'
@@ -14,6 +15,7 @@ framework:
 
 
         routing:
+            # Acme\Shared\Domain\Bus\Event\DomainEvent: event
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
 

@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Acme\Shared\Domain\Bus\Command;
+namespace Acme\Shared\Infrastructure\Bus\Command;
 
+use Acme\Shared\Domain\Bus\Command\CommandBusInterface;
+use Acme\Shared\Domain\Bus\Command\CommandInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 

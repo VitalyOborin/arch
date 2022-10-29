@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Acme\Shared\Domain\Bus\Query;
 
-interface QueryHandlerInterface
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+
+interface QueryHandlerInterface extends MessageHandlerInterface
 {
 }

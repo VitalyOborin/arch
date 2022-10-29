@@ -25,6 +25,6 @@ class AddProductHandler implements CommandHandlerInterface
             throw new ProductAlreadyExistsException();
         }
 
-        return $product->alias;
+        return $product->getAlias();
     }
 }

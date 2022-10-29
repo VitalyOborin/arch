@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace Acme\Product\Port\Console\Command;
 
-use Acme\Product\Application\Command\AddProduct\AddProductCommand;
-use Acme\Product\Domain\Entity\Product;
-use Acme\Product\Domain\ValueObject\Price;
+use Acme\Product\Application\Command\SetPrice\SetPriceCommand as SetPriceCommandBus;
 use Acme\Shared\Domain\Bus\Command\CommandBusInterface;
 use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:create-product',
-    description: 'Create random product',
+    name: 'app:set-price',
+    description: 'Set new price for product',
 )]
-class CreateProductCommand extends Command
+class SetPriceCommand extends Command
 {
     private CommandBusInterface $commandBus;
 
@@ -34,9 +31,8 @@ class CreateProductCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('alias', InputArgument::REQUIRED, 'Product alias to create')
-            ->addOption('name', null, InputOption::VALUE_OPTIONAL, 'Product name')
-            ->addOption('price', null, InputOption::VALUE_OPTIONAL, 'Product price');
+            ->addArgument('alias', InputArgument::REQUIRED, 'Product alias')
+            ->addArgument('price', InputArgument::REQUIRED, 'Product price');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -44,20 +40,17 @@ class CreateProductCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $alias = $input->getArgument('alias');
-        $name = $input->getOption('name') ?? 'Товар добавлен из консоли';
-        $price = (int)($input->getOption('price') ?? 100);
-
-        $product = Product::create($alias, $name, new Price($price, 'USD'));
+        $price = (int)($input->getArgument('price'));
 
         try {
-            $this->commandBus->dispatch(new AddProductCommand($product));
+            $this->commandBus->dispatch(new SetPriceCommandBus($alias, $price));
         } catch (Exception $e) {
             $io->error($e->getMessage());
 
             return Command::FAILURE;
         }
 
-        $io->success(sprintf('Product with code = %s has been created', $alias));
+        $io->success(sprintf('Product with code = %s has been updated', $alias));
 
         return Command::SUCCESS;
     }

@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Acme\Shared\Domain\Bus\Query;
+namespace Acme\Shared\Infrastructure\Bus\Query;
 
+use Acme\Shared\Domain\Bus\Query\QueryBusInterface;
+use Acme\Shared\Domain\Bus\Query\QueryInterface;
+use Acme\Shared\Domain\Bus\Query\ResponseInterface;
 use InvalidArgumentException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBusInterface;

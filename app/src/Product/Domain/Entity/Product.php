@@ -12,10 +12,15 @@ class Product extends AggregateRoot
     public string $id;
 
     public function __construct(
-        public string $alias = '',
-        public string $name = '',
+        public string $alias,
+        public string $name,
         public ?Price $price = null,
     ) {
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 
     public function setAlias(string $alias): void
