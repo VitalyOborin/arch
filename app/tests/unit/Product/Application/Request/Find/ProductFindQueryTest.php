@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @coversNothing
+ * @covers \Acme\Product\Application\Request\Find\ProductFindQuery
  */
 final class ProductFindQueryTest extends TestCase
 {

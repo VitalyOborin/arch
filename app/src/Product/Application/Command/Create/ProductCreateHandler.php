@@ -6,7 +6,6 @@ namespace Acme\Product\Application\Command\Create;
 
 use Acme\Product\Domain\Service\ProductCreator;
 use Acme\Shared\Domain\Bus\Command\CommandHandlerInterface;
-use Exception;
 
 class ProductCreateHandler implements CommandHandlerInterface
 {
@@ -20,11 +19,7 @@ class ProductCreateHandler implements CommandHandlerInterface
         $name = $command->getName();
         $price = $command->getPrice();
 
-        try {
-            $this->productCreator->__invoke($alias, $name, $price);
-        } catch (Exception $exception) {
-            // todo
-        }
+        $this->productCreator->__invoke($alias, $name, $price);
 
         return self::COMMAND_SUCCESS;
     }

@@ -6,12 +6,12 @@ namespace Acme\Product\Domain\Service;
 
 use Acme\Product\Domain\Entity\Product;
 use Acme\Product\Domain\Event\ProductCreateDomainEvent;
+use Acme\Product\Domain\Exception\ProductAlreadyExistsException;
 use Acme\Product\Domain\Repository\ProductRepositoryInterface;
 use Acme\Product\Domain\ValueObject\Price;
 use Acme\Shared\Domain\Bus\Event\DomainEventDispatcherInterface;
-use Exception;
 
-final class ProductCreator
+class ProductCreator
 {
     public function __construct(
         private readonly DomainEventDispatcherInterface $dispatcher,
@@ -26,10 +26,10 @@ final class ProductCreator
         $product->setName($name);
         $product->setPrice(new Price($price, 'USD')); // todo currency
 
-        try {
+        if ($this->repository->findOneByAlias($alias)) {
+            throw new ProductAlreadyExistsException();
+        } else {
             $this->repository->add($product);
-        } catch (Exception $exception) {
-            // todo domain exception processing
         }
 
         $this->dispatcher->dispatch(new ProductCreateDomainEvent($product), ProductCreateDomainEvent::NAME);
