@@ -38,7 +38,6 @@ class ProductController extends AbstractController
         }
     }
 
-
     #[Route('/products/', methods: ['GET'])]
     public function addProduct(): Response
     {

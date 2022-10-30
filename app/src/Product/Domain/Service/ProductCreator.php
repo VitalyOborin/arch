@@ -33,6 +33,7 @@ final class ProductCreator
         }
 
         $this->dispatcher->dispatch(new ProductCreateDomainEvent($product), ProductCreateDomainEvent::NAME);
+
         return $product;
     }
 }
