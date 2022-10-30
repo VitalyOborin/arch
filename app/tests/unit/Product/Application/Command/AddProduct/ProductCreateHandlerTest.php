@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Acme\Tests\unit\Product\Application\Command\AddProduct;
 
-use Acme\Product\Application\Command\AddProduct\AddProductCommand;
-use Acme\Product\Application\Command\AddProduct\AddProductHandler;
+use Acme\Product\Application\Command\Create\ProductCreateCommand;
+use Acme\Product\Application\Command\Create\ProductCreateHandler;
 use Acme\Product\Domain\Entity\Product;
 use Acme\Product\Domain\Exception\ProductAlreadyExistsException;
 use Acme\Product\Domain\Repository\ProductRepositoryInterface;
@@ -15,9 +15,9 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \Acme\Product\Application\Command\AddProduct\AddProductHandler
+ * @covers \Acme\Product\Application\Command\Create\ProductCreateHandler
  */
-final class AddProductHandlerTest extends TestCase
+final class ProductCreateHandlerTest extends TestCase
 {
     public function testProductAdd(): void
     {
@@ -25,7 +25,7 @@ final class AddProductHandlerTest extends TestCase
 
         $productRepository = $this->createMock(ProductRepositoryInterface::class);
 
-        $alias = (new AddProductHandler($productRepository))(new AddProductCommand($product));
+        $alias = (new ProductCreateHandler($productRepository))(new ProductCreateCommand($product));
 
         $this->assertSame($product->getAlias(), $alias);
     }
@@ -41,7 +41,7 @@ final class AddProductHandlerTest extends TestCase
             ->with($product->getAlias())
             ->willReturn($product);
 
-        (new AddProductHandler($productRepository))(new AddProductCommand($product));
+        (new ProductCreateHandler($productRepository))(new ProductCreateCommand($product));
     }
 
     private function createProduct(): Product

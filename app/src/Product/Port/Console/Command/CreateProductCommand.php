@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Acme\Product\Port\Console\Command;
 
-use Acme\Product\Application\Command\AddProduct\AddProductCommand;
+use Acme\Product\Application\Command\Create\ProductCreateCommand;
 use Acme\Product\Domain\Entity\Product;
+use Acme\Product\Domain\Service\ProductCreator;
 use Acme\Product\Domain\ValueObject\Price;
 use Acme\Shared\Domain\Bus\Command\CommandBusInterface;
 use Exception;
@@ -45,12 +46,10 @@ class CreateProductCommand extends Command
 
         $alias = $input->getArgument('alias');
         $name = $input->getOption('name') ?? 'Товар добавлен из консоли';
-        $price = (int)($input->getOption('price') ?? 100);
-
-        $product = Product::create($alias, $name, new Price($price, 'USD'));
+        $price = (int)$input->getOption('price') ?? rand(100, 999);
 
         try {
-            $this->commandBus->dispatch(new AddProductCommand($product));
+            $this->commandBus->dispatch(new ProductCreateCommand($alias, $name, $price));
         } catch (Exception $e) {
             $io->error($e->getMessage());
 

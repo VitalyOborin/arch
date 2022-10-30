@@ -21,9 +21,7 @@ class QueryBus implements QueryBusInterface
     public function query(QueryInterface $query): ResponseInterface
     {
         try {
-            $stamp = $this->messageBus->dispatch($query)->last(HandledStamp::class);
-
-            return $stamp->getResult();
+            return $this->messageBus->dispatch($query)->last(HandledStamp::class)->getResult();
         } catch (NoHandlerForMessageException $e) {
             throw new InvalidArgumentException(sprintf('The query has not a valid handler: %s', $query::class));
         }

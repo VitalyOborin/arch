@@ -2,15 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Acme\Product\Application\Command\AddProduct;
+namespace Acme\Product\Domain\Event;
 
 use Acme\Product\Domain\Entity\Product;
-use Acme\Shared\Domain\Bus\Command\CommandInterface;
+use Acme\Shared\Domain\Bus\Event\DomainEventAbstract;
 
-class AddProductCommand implements CommandInterface
+final class ProductFindDomainEvent extends DomainEventAbstract
 {
+    public const NAME = 'product.find';
+
     public function __construct(private readonly Product $product)
     {
+        parent::__construct();
     }
 
     public function getProduct(): Product

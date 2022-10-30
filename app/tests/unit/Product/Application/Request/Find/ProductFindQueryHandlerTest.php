@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acme\Tests\unit\Product\Application\Request\FindProduct;
+namespace Acme\Tests\unit\Product\Application\Request\Find;
 
 use PHPUnit\Framework\TestCase;
 
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversNothing
  */
-final class FindProductQueryHandlerTest extends TestCase
+final class ProductFindQueryHandlerTest extends TestCase
 {
     public function testHandler(): void
     {

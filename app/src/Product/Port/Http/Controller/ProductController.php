@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Acme\Product\Port\Http\Controller;
 
-use Acme\Product\Application\Command\AddProduct\AddProductCommand;
-use Acme\Product\Application\Request\FindProduct\FindProductQuery;
-use Acme\Product\Domain\Entity\Product;
-use Acme\Product\Domain\ValueObject\Price;
+use Acme\Product\Application\Command\Create\ProductCreateCommand;
+use Acme\Product\Application\Request\Find\ProductFindQuery;
 use Acme\Shared\Domain\Bus\Command\CommandBusInterface;
 use Acme\Shared\Domain\Bus\Query\QueryBusInterface;
 use Acme\Shared\Port\Http\Response\JsonErrorResponse;
@@ -32,7 +30,7 @@ class ProductController extends AbstractController
     public function getProductByCode(string $alias): Response
     {
         try {
-            $product = $this->queryBus->query(new FindProductQuery(alias: $alias))->getResult();
+            $product = $this->queryBus->query(new ProductFindQuery(alias: $alias))->getResult();
 
             return $this->json($product);
         } catch (Exception $e) {
@@ -40,13 +38,16 @@ class ProductController extends AbstractController
         }
     }
 
+
     #[Route('/products/', methods: ['GET'])]
     public function addProduct(): Response
     {
         try {
             $this->commandBus->dispatch(
-                new AddProductCommand(
-                    new Product('alias_uniq', 'Some Name', new Price(100, 'USD')) // todo get data from post values
+                new ProductCreateCommand(
+                    alias: 'alias_uniq',
+                    name: 'Some Name',
+                    price: 100
                 )
             );
 

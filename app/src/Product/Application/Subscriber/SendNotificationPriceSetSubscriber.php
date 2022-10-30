@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Acme\Product\Application\Subscriber;
 
 use Acme\Product\Domain\Event\PriceSetDomainEvent;
-use Acme\Shared\Infrastructure\Bus\Event\DomainEventSubscriberAbstract;
+use Acme\Shared\Domain\Bus\Event\DomainEventSubscriberAbstract;
 use Psr\Log\LoggerInterface;
 
 class SendNotificationPriceSetSubscriber extends DomainEventSubscriberAbstract
@@ -31,10 +31,11 @@ class SendNotificationPriceSetSubscriber extends DomainEventSubscriberAbstract
 
         // send notification to log (example)
         $this->logger->info(sprintf(
-            'price updated for product = %s new price = %d, occurred on %s',
+            'price updated for product = %s new price = %d, occurred on %s in event %s',
             $product->getId(),
             $price->getValue(),
-            $event->getOccurredOn()->format('Y-m-d H:i:s')
+            $event->getOccurredOn()->format('Y-m-d H:i:s'),
+            $event->getEventClassName(),
         ));
     }
 

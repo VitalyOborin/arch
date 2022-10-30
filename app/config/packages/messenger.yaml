@@ -1,7 +1,12 @@
 framework:
     messenger:
         enabled: true
+        default_bus: query
         buses:
+            command:
+                default_middleware: true
+            query:
+                default_middleware: true
             event:
                 default_middleware: allow_no_handlers
         transports:
@@ -13,11 +18,9 @@ framework:
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
-
         routing:
-            # Acme\Shared\Domain\Bus\Event\DomainEvent: event
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            #Acme\Shared\Domain\Bus\Command\CommandInterface: command
+            #Acme\Shared\Domain\Bus\Query\QueryInterface: query
 
 # when@test:
 #    framework:

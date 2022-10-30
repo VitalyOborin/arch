@@ -10,12 +10,12 @@ use Acme\Shared\Domain\Aggregate\AggregateRoot;
 class Product extends AggregateRoot
 {
     public string $id;
+    public string $alias;
+    public string $name;
+    public ?Price $price;
 
-    public function __construct(
-        public string $alias,
-        public string $name,
-        public ?Price $price = null,
-    ) {
+    public function __construct()
+    {
     }
 
     public function getId(): string

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Acme\Tests\unit\Product\Application\Request\FindProduct;
+namespace Acme\Tests\unit\Product\Application\Request\Find;
 
-use Acme\Product\Application\Request\FindProduct\FindProductQuery;
+use Acme\Product\Application\Request\Find\ProductFindQuery;
 use Acme\Product\Domain\Entity\Product;
 use Acme\Product\Domain\ValueObject\Price;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversNothing
  */
-final class FindProductQueryTest extends TestCase
+final class ProductFindQueryTest extends TestCase
 {
     public function testGetAlias(): void
     {
@@ -23,7 +23,7 @@ final class FindProductQueryTest extends TestCase
         $product->setName('Название товара');
         $product->setPrice(new Price(123456, 'USD'));
 
-        $query = new FindProductQuery($product->getAlias());
+        $query = new ProductFindQuery($product->getAlias());
 
         $this->assertSame($product->getAlias(), $query->getAlias());
     }

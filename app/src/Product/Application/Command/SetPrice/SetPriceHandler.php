@@ -4,29 +4,29 @@ declare(strict_types=1);
 
 namespace Acme\Product\Application\Command\SetPrice;
 
-use Acme\Product\Domain\Exception\ProductNotFoundException;
-use Acme\Product\Domain\Repository\ProductRepositoryInterface;
-use Acme\Product\Domain\Service\ProductService;
+use Acme\Product\Domain\Exception\UnableToCreateProductException;
+use Acme\Product\Domain\Service\PriceSetter;
+use Acme\Product\Domain\Service\ProductFinder;
 use Acme\Product\Domain\ValueObject\Price;
 use Acme\Shared\Domain\Bus\Command\CommandHandlerInterface;
-use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-#[AsMessageHandler(fromTransport: 'command')]
 class SetPriceHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly ProductRepositoryInterface $productRepository,
-        private readonly ProductService $productService
+        private readonly PriceSetter $priceSetter,
+        private readonly ProductFinder $productFinder,
     ) {
     }
 
     public function __invoke(SetPriceCommand $command): int
     {
         $price = new Price($command->getPrice(), 'USD');
-        if ($product = $this->productRepository->findOneByAlias($command->getAlias())) {
-            $this->productService->setPrice($product, $price);
+        $product = $this->productFinder->__invoke($command->getAlias());
+
+        if ($product) {
+            $this->priceSetter->__invoke($product, $price);
         } else {
-            throw new ProductNotFoundException();
+            throw new UnableToCreateProductException();
         }
 
         return self::COMMAND_SUCCESS;

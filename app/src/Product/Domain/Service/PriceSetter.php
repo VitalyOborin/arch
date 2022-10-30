@@ -8,17 +8,17 @@ use Acme\Product\Domain\Entity\Product;
 use Acme\Product\Domain\Event\PriceSetDomainEvent;
 use Acme\Product\Domain\Repository\ProductRepositoryInterface;
 use Acme\Product\Domain\ValueObject\Price;
-use Acme\Shared\Infrastructure\Bus\Event\DomainEventDispatcher;
+use Acme\Shared\Domain\Bus\Event\DomainEventDispatcherInterface;
 
-class ProductService
+final class PriceSetter
 {
     public function __construct(
-        private readonly DomainEventDispatcher $dispatcher,
+        private readonly DomainEventDispatcherInterface $dispatcher,
         private readonly ProductRepositoryInterface $repository,
     ) {
     }
 
-    public function setPrice(Product $product, Price $price): void
+    public function __invoke(Product $product, Price $price): void
     {
         $this->repository->setPrice($product, $price);
         $this->dispatcher->dispatch(new PriceSetDomainEvent($product, $price), PriceSetDomainEvent::NAME);

@@ -9,5 +9,5 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 interface CommandHandlerInterface extends MessageHandlerInterface
 {
     public const COMMAND_SUCCESS = 0;
-    public const COMMAND_FAILED = 1;
+    public const COMMAND_FAIL = 1;
 }
