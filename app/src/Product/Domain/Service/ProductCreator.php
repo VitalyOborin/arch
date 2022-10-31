@@ -28,9 +28,8 @@ class ProductCreator
 
         if ($this->repository->findOneByAlias($alias)) {
             throw new ProductAlreadyExistsException();
-        } else {
-            $this->repository->add($product);
         }
+        $this->repository->add($product);
 
         $this->dispatcher->dispatch(new ProductCreateDomainEvent($product), ProductCreateDomainEvent::NAME);
 

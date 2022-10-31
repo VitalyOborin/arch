@@ -50,5 +50,4 @@ final class ProductCreateHandlerTest extends TestCase
 
         (new ProductCreateHandler($productCreator))($command);
     }
-
 }

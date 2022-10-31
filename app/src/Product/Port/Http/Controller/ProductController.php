@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Acme\Product\Port\Http\Controller;
 
 use Acme\Product\Application\Command\Create\ProductCreateCommand;
-use Acme\Product\Application\Request\Find\ProductFindQuery;
+use Acme\Product\Application\Query\Find\ProductFindQuery;
 use Acme\Shared\Domain\Bus\Command\CommandBusInterface;
 use Acme\Shared\Domain\Bus\Query\QueryBusInterface;
 use Acme\Shared\Port\Http\Response\JsonErrorResponse;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acme\Product\Application\Request\Find;
+namespace Acme\Product\Application\Query\Find;
 
 use Acme\Product\Domain\Exception\UnableToCreateProductException;
 use Acme\Product\Domain\Service\ProductFinder;
