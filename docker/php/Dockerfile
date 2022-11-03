@@ -14,12 +14,11 @@ RUN apt-get update && apt-get install -y \
         libxml2-dev \
         libzip-dev \
         libwebp-dev \
-        librabbitmq-dev
+        librabbitmq-dev \
+        librdkafka-dev
 RUN docker-php-ext-configure gd --enable-gd --with-webp --with-jpeg --with-freetype
 RUN docker-php-ext-configure intl && docker-php-ext-install bcmath intl zip gd opcache pdo_mysql mysqli
-RUN pecl install amqp-1.11.0
-RUN pecl install igbinary
-RUN pecl install mongodb-1.14.1
+RUN pecl install amqp igbinary mongodb rdkafka && docker-php-ext-enable rdkafka && rm -rf /librdkafka
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN pecl install -o -f redis --enable-redis-igbinary=yes --enable-redis-lzf=no --enable-redis-zstd=no \
         &&  rm -rf /tmp/pear \

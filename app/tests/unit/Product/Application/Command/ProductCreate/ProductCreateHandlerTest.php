@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Acme\Tests\unit\Product\Application\Command\ProductCreate;
 
 use Acme\Product\Application\Command\Create\ProductCreateCommand;
-use Acme\Product\Application\Command\Create\ProductCreateHandler;
+use Acme\Product\Application\Command\Create\ProductCreateCommandHandler;
 use Acme\Product\Domain\Exception\ProductAlreadyExistsException;
 use Acme\Product\Domain\Service\ProductCreator;
 use Acme\Shared\Domain\Bus\Command\CommandHandlerInterface;
@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @internal
  *
- * @covers \Acme\Product\Application\Command\Create\ProductCreateHandler
+ * @covers \Acme\Product\Application\Command\Create\ProductCreateCommandHandler
  */
 final class ProductCreateHandlerTest extends TestCase
 {
@@ -30,7 +30,7 @@ final class ProductCreateHandlerTest extends TestCase
         $productCreator = $this->createMock(ProductCreator::class);
         $command = new ProductCreateCommand($alias, $name, $price);
 
-        $result = (new ProductCreateHandler($productCreator))($command);
+        $result = (new ProductCreateCommandHandler($productCreator))($command);
 
         $this->assertEquals(self::COMMAND_SUCCESS, $result);
     }
@@ -48,6 +48,6 @@ final class ProductCreateHandlerTest extends TestCase
 
         $productCreator->method('__invoke')->with($alias, $name, $price)->willThrowException(new ProductAlreadyExistsException());
 
-        (new ProductCreateHandler($productCreator))($command);
+        (new ProductCreateCommandHandler($productCreator))($command);
     }
 }

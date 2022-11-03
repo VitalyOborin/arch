@@ -10,7 +10,7 @@ use Acme\Product\Domain\Service\ProductFinder;
 use Acme\Product\Domain\ValueObject\Price;
 use Acme\Shared\Domain\Bus\Command\CommandHandlerInterface;
 
-class SetPriceHandler implements CommandHandlerInterface
+class SetPriceCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly PriceSetter $priceSetter,

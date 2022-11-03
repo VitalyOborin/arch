@@ -16,6 +16,8 @@ services:
       timeout: 3s
       retries: 3
       start_period: 30s
+    environment:
+      KAFKA_BROKERS: "kafka:9092"
     networks:
       - default
 
@@ -26,9 +28,11 @@ services:
     volumes:
       - ./app:/app
     container_name: nginx
-    restart: unless-stopped
     working_dir: /app
     tty: true
+    healthcheck:
+      test: ["CMD-SHELL", "wget -O /dev/null http://localhost || exit 1"]
+      timeout: 10s
     ports:
       - "80:80"
       - "443:443"
@@ -66,5 +70,5 @@ services:
 
 networks:
   default:
-    driver: bridge
     name: docker_default
+    external: true
