@@ -99,7 +99,17 @@
 
 В рамках проекта реализация ES выполнена на основе компонента [symfony/event-dispatcher](https://symfony.com/doc/current/components/event_dispatcher.html). 
 
+#  Работа с Apache Kafka
+Для работы с Apache Kafka реализован свой транспорт на базе symfony/messenger. Каждый транспорт подключается к отдельному топику, на каждый транспорт/топик вешается один хэндлер. Запуск консьюмеров командой `bin/console messenger:consume kafka.products kafka.prices -vv`, пример сообщения для установки цены товара в топике prices:
+
+`{"price": 123,"currency": "USD"}`
+
+в качестве ключа сообщения используется значение alias товара, например, `new_uniq_alias2`
+
 ## Todo
+* Топики для кафки как реализации интерфейса топиков
+* Тегирование обработчиков топиков или атрибуты
+* Удалить прямую зависимость от KafkaHandlerInterface от MessageSubscriberInterface
 * Переосмыслить Domain Service
 * Кеширование данных
 * Расширение Product
