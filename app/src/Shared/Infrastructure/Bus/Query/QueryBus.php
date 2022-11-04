@@ -14,14 +14,17 @@ use Symfony\Component\Messenger\Stamp\HandledStamp;
 
 class QueryBus implements QueryBusInterface
 {
-    public function __construct(private readonly MessageBusInterface $messageBus)
+    public function __construct(private readonly MessageBusInterface $queryBus)
     {
     }
 
     public function query(QueryInterface $query): ResponseInterface
     {
         try {
-            return $this->messageBus->dispatch($query)->last(HandledStamp::class)->getResult();
+            return $this->queryBus
+                ->dispatch($query)
+                ->last(HandledStamp::class)
+                ->getResult();
         } catch (NoHandlerForMessageException $e) {
             throw new InvalidArgumentException(sprintf('The query has not a valid handler: %s', $query::class));
         }

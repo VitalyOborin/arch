@@ -40,7 +40,7 @@ class SetPriceCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $alias = $input->getArgument('alias');
-        $price = (int)($input->getArgument('price'));
+        $price = (int)$input->getArgument('price');
 
         try {
             $this->commandBus->dispatch(new SetPriceCommandBus($alias, $price));

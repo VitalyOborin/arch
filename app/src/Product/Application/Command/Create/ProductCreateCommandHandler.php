@@ -7,7 +7,7 @@ namespace Acme\Product\Application\Command\Create;
 use Acme\Product\Domain\Service\ProductCreator;
 use Acme\Shared\Domain\Bus\Command\CommandHandlerInterface;
 
-class ProductCreateHandler implements CommandHandlerInterface
+class ProductCreateCommandHandler implements CommandHandlerInterface
 {
     public function __construct(private readonly ProductCreator $productCreator)
     {

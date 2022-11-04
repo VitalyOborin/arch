@@ -21,18 +21,13 @@ services:
             tags: ['app.domain_event_subscriber']
 
         Acme\Shared\Domain\Bus\Command\CommandHandlerInterface:
-            tags: #- name: app.command_handler
-                -
-                    name: messenger.message_handler
-                    bus: command
-                    handles: Acme\Shared\Domain\Bus\Command\CommandInterface
+            tags: [{ name: messenger.message_handler, bus: command.bus }]
 
         Acme\Shared\Domain\Bus\Query\QueryHandlerInterface:
-            tags:
-                -
-                    name: messenger.message_handler
-                    bus: query
-                    handles: Acme\Shared\Domain\Bus\Query\QueryInterface
+            tags: [{ name: messenger.message_handler, bus: query.bus }]
+
+        Acme\Shared\Domain\Bus\Kafka\KafkaHandlerInterface:
+            tags: [{ name: messenger.message_handler, bus: kafka.bus}]
 
     Acme\:
         resource: '../src/'
@@ -40,8 +35,6 @@ services:
             - '../src/DependencyInjection/'
             #- '../src/*/Domain/Entity/'
             - '../src/Kernel.php'
-    Acme\Shared\:
-        resource: '../src/Shared/'
 
     Acme\Shared\Infrastructure\Bus\Event\DomainEventDispatcher:
         arguments: [!tagged_iterator app.domain_event_subscriber]
@@ -51,3 +44,6 @@ services:
         namespace: Acme\
         resource: '../src/*/Port/Http/Controller/*'
         tags: ['controller.service_arguments']
+
+    Acme\Shared\Infrastructure\Bus\Kafka\KafkaTransportFactory:
+        tags: [messenger.transport_factory]

@@ -7,6 +7,7 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-rdkafka": "*",
         "doctrine/annotations": "^1.13",
         "doctrine/mongodb-odm-bundle": "^4.5",
         "spatie/data-transfer-object": "^3.9",
@@ -18,6 +19,7 @@
         "symfony/monolog-bundle": "^3.8",
         "symfony/proxy-manager-bridge": "6.1.*",
         "symfony/runtime": "6.1.*",
+        "symfony/validator": "6.1.*",
         "symfony/yaml": "6.1.*"
     },
     "config": {
