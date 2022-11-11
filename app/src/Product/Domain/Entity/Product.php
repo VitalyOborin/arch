@@ -23,6 +23,11 @@ class Product extends AggregateRoot
         return $this->id;
     }
 
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
+
     public function setAlias(string $alias): void
     {
         $this->alias = $alias;

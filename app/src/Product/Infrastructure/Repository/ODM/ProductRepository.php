@@ -23,7 +23,7 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function findOneByAlias(string $alias): ?Product
     {
-        /* @var Product|null $product */
+        /** @var Product|null $product */
         return $this->dm
             ->createQueryBuilder(Product::class)
             ->field('alias')->equals($alias)

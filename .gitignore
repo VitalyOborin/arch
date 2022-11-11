@@ -1,3 +1,4 @@
 .idea
 data
+docker-compose.override.yaml
 /.php-cs-fixer.cache

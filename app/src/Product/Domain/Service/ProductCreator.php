@@ -14,7 +14,7 @@ use Acme\Shared\Domain\Bus\Event\DomainEventDispatcherInterface;
 class ProductCreator
 {
     public function __construct(
-        private readonly DomainEventDispatcherInterface $dispatcher,
+        private readonly DomainEventDispatcherInterface $eventDispatcher,
         private readonly ProductRepositoryInterface $repository,
     ) {
     }
@@ -31,7 +31,7 @@ class ProductCreator
         }
         $this->repository->add($product);
 
-        $this->dispatcher->dispatch(new ProductCreateDomainEvent($product), ProductCreateDomainEvent::NAME);
+        $this->eventDispatcher->dispatch(new ProductCreateDomainEvent($product), ProductCreateDomainEvent::NAME);
 
         return $product;
     }

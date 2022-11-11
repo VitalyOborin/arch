@@ -15,11 +15,11 @@ class ProductCreateCommandHandler implements CommandHandlerInterface
 
     public function __invoke(ProductCreateCommand $command): int
     {
-        $alias = $command->getAlias();
-        $name = $command->getName();
-        $price = $command->getPrice();
-
-        $this->productCreator->__invoke($alias, $name, $price);
+        $this->productCreator->__invoke(
+            $command->getAlias(),
+            $command->getName(),
+            $command->getPrice()
+        );
 
         return self::COMMAND_SUCCESS;
     }

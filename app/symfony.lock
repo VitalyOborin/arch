@@ -200,5 +200,8 @@
             "config/packages/web_profiler.yaml",
             "config/routes/web_profiler.yaml"
         ]
+    },
+    "vitalyoborin/symfony-kafka-transport": {
+        "version": "v0.0.2"
     }
 }

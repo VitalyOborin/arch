@@ -53,7 +53,7 @@ class CreateProductCommand extends Command
             return Command::FAILURE;
         }
 
-        $io->success(sprintf('Product with code = %s has been created', $alias));
+        $io->success(sprintf('Product has been created. alias = %s', $alias));
 
         return Command::SUCCESS;
     }
