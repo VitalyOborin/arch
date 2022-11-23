@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Acme\Product\Domain\Exception;
 
-use Exception;
+use DomainException;
 use Throwable;
 
-class ProductNotFoundException extends Exception
+class ProductNotFoundException extends DomainException
 {
     protected const MESSAGE = 'Товар не найден';
     protected const CODE = 404;

@@ -7,16 +7,13 @@ namespace Acme\Product\Domain\Service;
 use Acme\Product\Domain\Entity\Product;
 use Acme\Product\Domain\Event\PriceSetDomainEvent;
 use Acme\Product\Domain\Repository\ProductRepositoryInterface;
-use Acme\Product\Domain\TransportMessage\PriceSetTransportMessage;
 use Acme\Product\Domain\ValueObject\Price;
 use Acme\Shared\Domain\Bus\Event\DomainEventDispatcherInterface;
-use Acme\Shared\Domain\Bus\Transport\TransportBusInterface;
 
 final class PriceSetter
 {
     public function __construct(
         private readonly DomainEventDispatcherInterface $eventDispatcher,
-        private readonly TransportBusInterface $transportBus,
         private readonly ProductRepositoryInterface $repository,
     ) {
     }
@@ -25,6 +22,5 @@ final class PriceSetter
     {
         $this->repository->setPrice($product, $price);
         $this->eventDispatcher->dispatch(new PriceSetDomainEvent($product, $price), PriceSetDomainEvent::NAME);
-        $this->transportBus->dispatch(new PriceSetTransportMessage($product, $price));
     }
 }

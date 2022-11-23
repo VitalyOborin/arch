@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Acme\Product\Application\Transport;
 
 use Acme\Shared\Domain\Bus\Transport\TransportHandlerInterface;
+use Acme\Product\Application\Transport\TopicPricesMessage;
 use Psr\Log\LoggerInterface;
-use VO\KafkaTransport\Messenger\KafkaMessageInterface; // todo удалить привязку к инфраструктуре
 
 class TopicPricesHandler implements TransportHandlerInterface
 {
-    public const TOPIC = 'product';
-
     public function __construct(
         // private readonly PriceSetter $priceSetter,
         // private readonly ProductFinder $productFinder,
@@ -20,7 +18,7 @@ class TopicPricesHandler implements TransportHandlerInterface
     }
 
     // todo вызывать метод только для определенного топика и/или топик + параметры из headers сообщения в kafka
-    public function __invoke(KafkaMessageInterface $kafkaMessage): void // todo реализовать работу с интерфейсом
+    public function __invoke(TopicPricesMessage $message): void // todo реализовать работу с интерфейсом
     {
         /*$productAlias = $message->getKey();
         $priceValue = $message->getBody()['price'];

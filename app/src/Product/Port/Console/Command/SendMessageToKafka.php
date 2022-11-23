@@ -13,6 +13,9 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\MessageBusInterface;
+use VO\KafkaTransport\Messenger\Stamp\KafkaTopicStamp;
 
 #[AsCommand(
     name: 'app:send-kafka',
@@ -20,9 +23,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class SendMessageToKafka extends Command
 {
-    private TransportBusInterface $kafkaBus;
+    private MessageBusInterface $kafkaBus;
 
-    public function __construct(TransportBusInterface $kafkaBus, string $name = null)
+    public function __construct(MessageBusInterface $kafkaBus, string $name = null)
     {
         parent::__construct($name);
         $this->kafkaBus = $kafkaBus;
@@ -41,14 +44,15 @@ class SendMessageToKafka extends Command
         $message = ['price' => random_int(0, 1000)];
 
         try {
-            $this->kafkaBus->dispatch(new TopicPricesMessage($alias, $message)); // todo сообщение должно отправлять только в определенный топик
+            $envelope = new Envelope(new TopicPricesMessage($alias, $message), [new KafkaTopicStamp('prices')]);
+            $this->kafkaBus->dispatch($envelope);
         } catch (Exception $e) {
             $io->error($e->getMessage());
 
             return Command::FAILURE;
         }
 
-        $io->success(sprintf('Product with code = %s has been updated', $alias));
+        $io->success(sprintf('Message with alias = %s has been sent', $alias));
 
         return Command::SUCCESS;
     }

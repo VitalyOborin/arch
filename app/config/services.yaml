@@ -26,11 +26,9 @@ services:
         Acme\Shared\Domain\Bus\Query\QueryHandlerInterface:
             tags: [{ name: messenger.message_handler, bus: query.bus }]
 
-        Acme\Shared\Domain\Bus\Transport\TransportHandlerInterface:
-            tags:
-                -
-                    name: messenger.message_handler
-                    bus: kafka.bus
+#        Acme\Shared\Domain\Bus\Transport\TransportHandlerInterface:
+#            tags: [{ name: messenger.message_handler, bus: kafka.bus }]
+
 
     Acme\:
         resource: '../src/'
@@ -44,10 +42,12 @@ services:
         lazy: true
 
     Acme\Product\Application\Transport\TopicPricesHandler:
-        tags:
-            -
-                name: messenger.message_handler
-                handles: VO\KafkaTransport\Messenger\KafkaMessage
+        tags: [{name: messenger.message_handler, from_transport: kafka.prices, handles: Acme\Product\Application\Transport\TopicPricesMessage}]
+        autoconfigure: false
+
+    Acme\Product\Application\Transport\TopicProductsHandler:
+        tags: [{name: messenger.message_handler, from_transport: kafka.products, handles: Acme\Product\Application\Transport\TopicProductsMessage}]
+        autoconfigure: false
 
     controllers:
         namespace: Acme\
