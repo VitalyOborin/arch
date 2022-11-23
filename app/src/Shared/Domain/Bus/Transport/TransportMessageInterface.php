@@ -6,5 +6,4 @@ namespace Acme\Shared\Domain\Bus\Transport;
 
 interface TransportMessageInterface
 {
-    public const TOPIC = '';
 }

@@ -1,7 +1,7 @@
 framework:
     messenger:
         enabled: true
-        default_bus: query.bus
+        default_bus: command.bus
         buses:
             kafka.bus: ~
             command.bus: ~
@@ -13,6 +13,7 @@ framework:
             sync: 'sync://'
             kafka.products:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN_KAFKA)%'
+                serializer: Acme\Shared\Infrastructure\Bus\Transport\TopicProductsSerializer
                 failure_transport: 'kafka.failure'
                 retry_strategy:
                     max_retries: 0
@@ -25,6 +26,13 @@ framework:
                     receiveTimeout: 10000
             kafka.prices:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN_KAFKA)%'
+                serializer: Acme\Shared\Infrastructure\Bus\Transport\TopicPricesSerializer
+                failure_transport: 'kafka.failure'
+                retry_strategy:
+                    max_retries: 0
+                    delay: 1000
+                    multiplier: 2
+                    max_delay: 0
                 options:
                     topic: 'prices'
                     group_id: 'consumer-prices-messenger'
@@ -37,7 +45,8 @@ framework:
         routing:
             'Acme\Shared\Domain\Bus\Command\CommandInterface': sync
             'Acme\Shared\Domain\Bus\Query\QueryInterface': sync
-            'Acme\Shared\Domain\Bus\Transport\TransportMessageInterface': [kafka.products, kafka.prices]
+            'Acme\Product\Application\Transport\TopicProductsMessage': kafka.products
+            'Acme\Product\Application\Transport\TopicPricesMessage': kafka.prices
 
 
 # when@test:
