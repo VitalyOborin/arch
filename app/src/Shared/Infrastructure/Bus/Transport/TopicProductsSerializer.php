@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Acme\Shared\Infrastructure\Bus\Transport;
 
 use Acme\Product\Application\Transport\TopicProductsMessage;
+use Exception;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
+
+use const JSON_UNESCAPED_UNICODE;
 
 class TopicProductsSerializer implements SerializerInterface
 {
@@ -20,14 +23,21 @@ class TopicProductsSerializer implements SerializerInterface
         );
     }
 
+    /**
+     * @throws Exception
+     */
     public function encode(Envelope $envelope): array
     {
         $message = $envelope->getMessage();
 
-        return [
-            'key' => $message->getKey(),
-            'topic' => $message->getTopic(),
-            'body' => json_encode($message->getBody(), JSON_UNESCAPED_UNICODE),
-        ];
+        if ($message instanceof TopicProductsMessage) {
+            return [
+                'key' => $message->getKey(),
+                'topic' => $message->getTopic(),
+                'body' => json_encode($message->getBody(), JSON_UNESCAPED_UNICODE),
+            ];
+        }
+
+        throw new Exception('Unsupported message class');
     }
 }

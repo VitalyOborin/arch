@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Acme\Product\Port\Console\Command;
 
 use Acme\Product\Application\Transport\TopicPricesMessage;
-use Acme\Shared\Domain\Bus\Transport\TransportBusInterface;
 use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;

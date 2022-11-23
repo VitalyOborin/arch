@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Acme\Product\Application\Transport;
 
 use Acme\Shared\Domain\Bus\Transport\TransportHandlerInterface;
-use Acme\Product\Application\Transport\TopicPricesMessage;
 use Psr\Log\LoggerInterface;
 
 class TopicPricesHandler implements TransportHandlerInterface
