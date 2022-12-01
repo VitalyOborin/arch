@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Acme\Product\Domain\Repository;
 
-use Acme\Product\Domain\Entity\Product;
+use Acme\Product\Domain\Product;
 use Acme\Product\Domain\ValueObject\Price;
 
 interface ProductRepositoryInterface

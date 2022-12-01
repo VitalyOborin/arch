@@ -25,10 +25,10 @@ class SetPriceCommandHandler implements CommandHandlerInterface
 
         if ($product) {
             $this->priceSetter->__invoke($product, $price);
-        } else {
-            throw new ProductNotFoundException();
+
+            return self::COMMAND_SUCCESS;
         }
 
-        return self::COMMAND_SUCCESS;
+        throw new ProductNotFoundException();
     }
 }

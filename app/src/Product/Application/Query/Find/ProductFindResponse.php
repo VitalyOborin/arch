@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Acme\Product\Application\Query\Find;
 
-use Acme\Product\Domain\Entity\Product;
+use Acme\Product\Domain\Product;
 use Acme\Shared\Domain\Bus\Query\ResponseInterface;
 
 final class ProductFindResponse implements ResponseInterface

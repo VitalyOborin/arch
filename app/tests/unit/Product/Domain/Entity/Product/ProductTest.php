@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Acme\Tests\unit\Product\Domain\Entity\Product;
+namespace Acme\Tests\unit\Product\Domain\Product;
 
-use Acme\Product\Domain\Entity\Product;
+use Acme\Product\Domain\Product;
 use Acme\Product\Domain\ValueObject\Price;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
  *
- * @covers \Acme\Product\Domain\Entity\Product
+ * @covers \Acme\Product\Domain\Product
  */
 final class ProductTest extends TestCase
 {

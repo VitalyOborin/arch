@@ -31,11 +31,11 @@ class ProductController extends AbstractController
     {
         try {
             $product = $this->queryBus->query(new ProductFindQuery(alias: $alias))->getResult();
-
-            return $this->json($product);
         } catch (Exception $e) {
             return new JsonErrorResponse($e);
         }
+
+        return $this->json($product);
     }
 
     #[Route('/products/', methods: ['GET'])]
@@ -49,10 +49,10 @@ class ProductController extends AbstractController
                     price: 100
                 )
             );
-
-            return $this->json(['result' => self::RESULT_SUCCESS]);
         } catch (Exception $e) {
             return new JsonErrorResponse($e);
         }
+
+        return $this->json(['result' => self::RESULT_SUCCESS]);
     }
 }

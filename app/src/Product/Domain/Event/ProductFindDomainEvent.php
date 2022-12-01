@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Acme\Product\Domain\Event;
 
-use Acme\Product\Domain\Entity\Product;
+use Acme\Product\Domain\Product;
 use Acme\Shared\Domain\Bus\Event\DomainEventAbstract;
 
 final class ProductFindDomainEvent extends DomainEventAbstract

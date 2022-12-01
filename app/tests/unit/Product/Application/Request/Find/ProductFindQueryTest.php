@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Acme\Tests\unit\Product\Application\Request\Find;
 
 use Acme\Product\Application\Query\Find\ProductFindQuery;
-use Acme\Product\Domain\Entity\Product;
+use Acme\Product\Domain\Product;
 use Acme\Product\Domain\ValueObject\Price;
 use PHPUnit\Framework\TestCase;
 

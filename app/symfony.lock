@@ -22,7 +22,7 @@
         ]
     },
     "friendsofphp/php-cs-fixer": {
-        "version": "3.12",
+        "version": "3.13",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -103,7 +103,7 @@
         ]
     },
     "symfony/maker-bundle": {
-        "version": "1.45",
+        "version": "1.48",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -136,7 +136,7 @@
         ]
     },
     "symfony/phpunit-bridge": {
-        "version": "6.1",
+        "version": "6.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",

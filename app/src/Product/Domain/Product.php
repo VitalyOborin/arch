@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acme\Product\Domain\Entity;
+namespace Acme\Product\Domain;
 
 use Acme\Product\Domain\ValueObject\Price;
 use Acme\Shared\Domain\Aggregate\AggregateRoot;

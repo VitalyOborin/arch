@@ -3,7 +3,7 @@
                         xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
-    <document name="Acme\Product\Domain\Entity\Product" db="shop" collection="products">
+    <document name="Acme\Product\Domain\Product" db="shop" collection="products">
         <id />
         <field field-name="alias" type="string" />
         <field field-name="name" type="string" />

@@ -14,13 +14,13 @@ class Price
         public readonly int $decimals = 2,
     ) {
         if ($this->value < 0) {
-            throw new InvalidArgumentException('Цена не может быть отрицательной');
+            throw new InvalidArgumentException('Price cannot be negative');
         }
         if (mb_strlen($this->currency) !== 3) {
-            throw new InvalidArgumentException('Код валюты должен быть из 3 символов');
+            throw new InvalidArgumentException('Currency code must be 3 characters long');
         }
         if ($this->decimals < 0) {
-            throw new InvalidArgumentException('Количество знаков после запятой не может быть меньше 0');
+            throw new InvalidArgumentException('Number of decimal places cannot be less than 0');
         }
     }
 
