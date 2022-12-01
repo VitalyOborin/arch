@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acme\Tests\unit\Product\Domain\Product;
+namespace Acme\Tests\unit\Product\Domain;
 
 use Acme\Product\Domain\Product;
 use Acme\Product\Domain\ValueObject\Price;

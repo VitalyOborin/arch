@@ -1,4 +1,6 @@
 {
+    "name": "vitalyoborin/arch",
+    "description": "Пример реализации архитектуры приложения",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
