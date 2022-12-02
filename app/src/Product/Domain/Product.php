@@ -5,25 +5,27 @@ declare(strict_types=1);
 namespace Acme\Product\Domain;
 
 use Acme\Product\Domain\ValueObject\Price;
+use Acme\Product\Domain\ValueObject\ProductId;
 use Acme\Shared\Domain\Aggregate\AggregateRoot;
 
 class Product extends AggregateRoot
 {
-    public string $id;
+    public ProductId $id;
     public string $alias;
     public string $name;
     public ?Price $price;
 
     public function __construct()
     {
+        $this->id = new ProductId();
     }
 
-    public function getId(): string
+    public function getId(): ProductId
     {
         return $this->id;
     }
 
-    public function setId(string $id): void
+    public function setId(ProductId $id): void
     {
         $this->id = $id;
     }

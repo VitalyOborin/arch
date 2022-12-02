@@ -10,12 +10,14 @@ use Acme\Product\Domain\Product;
 use Acme\Product\Domain\Repository\ProductRepositoryInterface;
 use Acme\Product\Domain\ValueObject\Price;
 use Acme\Shared\Domain\Bus\Event\DomainEventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 
 class ProductCreator
 {
     public function __construct(
         private readonly DomainEventDispatcherInterface $eventDispatcher,
         private readonly ProductRepositoryInterface $repository,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -27,9 +29,12 @@ class ProductCreator
         $product->setPrice(new Price($price, 'USD')); // todo currency
 
         if ($this->repository->findOneByAlias($alias)) {
-            throw new ProductAlreadyExistsException();
+            throw new ProductAlreadyExistsException(); // todo move to repository
         }
+
         $this->repository->add($product);
+
+        $this->logger->info(sprintf('Added product with id: %s', $product->getId()));
 
         $this->eventDispatcher->dispatch(new ProductCreateDomainEvent($product), ProductCreateDomainEvent::NAME);
 
