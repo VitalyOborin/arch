@@ -6,6 +6,9 @@ doctrine_mongodb:
             server: '%env(resolve:MONGODB_URL)%'
             options: {}
     default_database: '%env(resolve:MONGODB_DB)%'
+    types:
+        product_uuid:
+            class: 'Acme\Product\Infrastructure\Repository\Types\ProductUuid'
     document_managers:
         default:
             auto_mapping: true

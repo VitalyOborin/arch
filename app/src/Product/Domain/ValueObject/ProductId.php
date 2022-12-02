@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace Acme\Product\Domain\ValueObject;
 
-use InvalidArgumentException;
+use Acme\Shared\Domain\ValueObject\Uuid;
 
-use const PHP_INT_MAX;
-
-class ProductId
+class ProductId extends Uuid
 {
-    public function __construct(private readonly int $productId)
+    private string $uuid;
+
+    public function __construct(?string $uuid = null)
     {
-        if ($this->productId < 0) {
-            throw new InvalidArgumentException('ID cannot be negative');
-        }
-        if ($this->productId > PHP_INT_MAX) {
-            throw new InvalidArgumentException(sprintf('ID cannot be greater than %d', PHP_INT_MAX));
-        }
+        $this->uuid = $uuid ?? parent::v4()->uid;
+        parent::__construct($this->uuid);
     }
 
-    public function getValue(): int
+    public function getValue(): string
     {
-        return $this->productId;
+        return $this->uuid;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getValue();
     }
 }
