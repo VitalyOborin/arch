@@ -18,23 +18,33 @@ final class ProductTest extends TestCase
     public function testCreate(): void
     {
         $expectedResult = [
-            'test_alias',
-            'Название товара',
-            new Price(123, 'USD'),
+            'alias' => 'test_alias',
+            'name' => 'Название товара',
+            'price' => new Price(123, 'USD'),
         ];
 
         $product = new Product();
-        $product->setAlias($expectedResult[0]);
-        $product->setName($expectedResult[1]);
-        $product->setPrice($expectedResult[2]);
+        $product->setAlias($expectedResult['alias']);
+        $product->setName($expectedResult['name']);
+        $product->setPrice($expectedResult['price']);
 
         $this->assertSame(
             $expectedResult,
             [
-                $product->getAlias(),
-                $product->getName(),
-                $product->getPrice(),
+                'alias' => $product->getAlias(),
+                'name' => $product->getName(),
+                'price' => $product->getPrice(),
             ]
+        );
+    }
+
+    public function testProductIdIsUuid(): void
+    {
+        $product = new Product();
+
+        $this->assertMatchesRegularExpression(
+            '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i',
+            $product->getId()->getValue()
         );
     }
 }
