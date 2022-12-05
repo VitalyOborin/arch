@@ -6,7 +6,7 @@ namespace Acme\Product\Application\Query\Find;
 
 use Acme\Shared\Domain\Bus\Query\QueryInterface;
 
-final class ProductFindQuery implements QueryInterface
+class ProductFindQuery implements QueryInterface
 {
     public function __construct(private readonly string $alias)
     {

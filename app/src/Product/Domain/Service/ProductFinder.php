@@ -9,7 +9,7 @@ use Acme\Product\Domain\Product;
 use Acme\Product\Domain\Repository\ProductRepositoryInterface;
 use Acme\Shared\Domain\Bus\Event\DomainEventDispatcherInterface;
 
-final class ProductFinder
+class ProductFinder
 {
     public function __construct(
         private readonly DomainEventDispatcherInterface $dispatcher,

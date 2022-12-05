@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Acme\Product\Application\Query\Find;
 
-use Acme\Product\Domain\Exception\UnableToCreateProductException;
+use Acme\Product\Domain\Exception\ProductNotFoundException;
 use Acme\Product\Domain\Service\ProductFinder;
 use Acme\Shared\Domain\Bus\Query\QueryHandlerInterface;
 
@@ -19,7 +19,7 @@ final class ProductFindQueryHandler implements QueryHandlerInterface
         $product = $this->productFinder->__invoke($query->getAlias());
 
         if ($product === null) {
-            throw new UnableToCreateProductException();
+            throw new ProductNotFoundException();
         }
 
         return new ProductFindResponse($product);
