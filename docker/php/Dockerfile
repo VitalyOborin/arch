@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
         curl \
         wget \
         zip unzip \
+        rsync \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
@@ -37,6 +38,7 @@ WORKDIR /app
 RUN mkdir /app/var/ && chown -R www-data:www-data /app/var/
 RUN chown -R www-data:www-data /run
 RUN mkdir /var/www/.composer/ && chown -R www-data:www-data /var/www/.composer/
+#RUN composer install --optimize-autoloader
 
 USER "www-data:www-data"
 

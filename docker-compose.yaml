@@ -1,11 +1,27 @@
 version: "3.8"
 
 services:
+  redis:
+    image: 'bitnami/redis:latest'
+    container_name: redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 60s
+      timeout: 5s
+      retries: 5
+      start_period: 0s
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - default
+
   app:
     build:
       context: ./
       dockerfile: ./docker/php/Dockerfile
     container_name: app
+    volumes:
+      - ./app:/source
     working_dir: /app
     healthcheck:
       test: curl --fail http://nginx/ping || exit 1
@@ -16,6 +32,8 @@ services:
     environment:
       KAFKA_BROKERS: "kafka:9092"
       PHP_CS_FIXER_IGNORE_ENV: 1
+    depends_on:
+      - redis
     networks:
       - default
 
@@ -24,9 +42,6 @@ services:
       context: ./
       dockerfile: ./docker/nginx/Dockerfile
     container_name: nginx
-    volumes:
-      - ./app:/app
-    working_dir: /app
     tty: true
     healthcheck:
       test: curl --fail http://localhost/ping || exit 1
@@ -41,41 +56,6 @@ services:
       - app
     networks:
       - default
-
-#  mongo:
-#    image: mongo:latest
-#    container_name: mongo
-#    healthcheck:
-#      test: echo 'db.runCommand("ping").ok' | mongosh --quiet
-#      interval: 60s
-#      timeout: 5s
-#      retries: 5
-#      start_period: 30s
-#    volumes:
-#      - ./data/mongo:/data/db
-#    environment:
-#      - MONGO_INITDB_ROOT_USERNAME=citizix
-#      - MONGO_INITDB_ROOT_PASSWORD=S3cret
-#    networks:
-#      - default
-#
-#  redis:
-#    image: 'bitnami/redis:latest'
-#    container_name: redis
-#    healthcheck:
-#      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
-#      interval: 60s
-#      timeout: 5s
-#      retries: 5
-#      start_period: 30s
-#    environment:
-#      - ALLOW_EMPTY_PASSWORD=yes
-#    depends_on:
-#      - app
-#    links:
-#      - app
-#    networks:
-#      - default
 
 networks:
   default:

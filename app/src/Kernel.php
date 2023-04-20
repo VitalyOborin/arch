@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Acme;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;

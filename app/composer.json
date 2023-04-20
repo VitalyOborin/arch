@@ -2,7 +2,7 @@
     "name": "vitalyoborin/arch2",
     "description": "Пример реализации архитектуры приложения",
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
@@ -34,7 +34,8 @@
         "symfony/maker-bundle": "^1.47",
         "symfony/phpunit-bridge": "^6.2",
         "symfony/stopwatch": "6.2.*",
-        "symfony/web-profiler-bundle": "6.2.*"
+        "symfony/web-profiler-bundle": "6.2.*",
+        "vimeo/psalm": "*"
     },
     "config": {
         "allow-plugins": {
