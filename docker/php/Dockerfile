@@ -15,14 +15,13 @@ RUN apt-get update && apt-get install -y \
         libxml2-dev \
         libzip-dev \
         libwebp-dev \
-        librabbitmq-dev \
-        librdkafka-dev
+        libcurl4-openssl-dev \
+        pkg-config \
+        libssl-dev
 RUN docker-php-ext-configure gd --enable-gd --with-webp --with-jpeg --with-freetype
 RUN docker-php-ext-configure intl && docker-php-ext-install bcmath intl zip gd opcache
-RUN pecl install amqp igbinary rdkafka mongodb
-RUN docker-php-ext-enable rdkafka && rm -rf /librdkafka
-RUN docker-php-ext-enable mongodb
 RUN pecl install xdebug && docker-php-ext-enable xdebug
+RUN pecl install igbinary mongodb
 RUN pecl install -o -f redis --enable-redis-igbinary=yes --enable-redis-lzf=no --enable-redis-zstd=no \
         &&  rm -rf /tmp/pear \
         &&  docker-php-ext-enable redis igbinary mongodb
@@ -38,8 +37,8 @@ WORKDIR /app
 RUN mkdir /app/var/ && chown -R www-data:www-data /app/var/
 RUN chown -R www-data:www-data /run
 RUN mkdir /var/www/.composer/ && chown -R www-data:www-data /var/www/.composer/
-#RUN composer install --optimize-autoloader
 
 USER "www-data:www-data"
+RUN composer install --optimize-autoloader
 
 CMD ["php-fpm"]

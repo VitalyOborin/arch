@@ -1,0 +1,18 @@
+<doctrine-mongo-mapping xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping
+                    http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+    <document name="Acme\Product\Domain\Product" db="symfony" collection="products">
+        <!--id strategy="UUID" type="product_uuid" /-->
+        <id type="string" />
+        <field field-name="alias" type="string" />
+        <field field-name="name" type="string" />
+        <embed-one field="price" target-document="Acme\Product\Domain\ValueObject\Price" />
+        <indexes>
+            <index unique="true">
+                <key name="alias" order="desc" />
+            </index>
+        </indexes>
+    </document>
+</doctrine-mongo-mapping>

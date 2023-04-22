@@ -1,0 +1,4 @@
+product_get:
+  path: /product/{alias}
+  controller: Acme\Product\Port\Http\ProductController
+  methods: [GET]
