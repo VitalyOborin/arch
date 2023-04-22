@@ -9,7 +9,7 @@ use Acme\Shared\Domain\Bus\Query\QueryBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class ApiController
+abstract class ApiControllerAbstract
 {
     public function __construct(
         private readonly QueryBus $queryBus,

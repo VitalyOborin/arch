@@ -38,7 +38,7 @@ class SetPriceCommand extends Command
         $price = (int) $input->getArgument('price');
 
         try {
-            $io->comment('make some magic...');
+            $io->comment('make some magic...'); // todo command to service PriceUpdater
         } catch (\Exception $e) {
             $io->error($e->getMessage());
 

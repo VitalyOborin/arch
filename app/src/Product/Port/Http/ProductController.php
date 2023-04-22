@@ -6,15 +6,14 @@ namespace Acme\Product\Port\Http;
 
 use Acme\Product\Application\Query\FindProductByAlias\FindProductByAliasQuery;
 use Acme\Product\Application\Query\ProductResponse;
-use Acme\Product\Domain\Exception\ProductNotFoundException;
 use Acme\Shared\Domain\Bus\Query\QueryBus;
-use Acme\Shared\Port\Http\ApiController;
+use Acme\Shared\Port\Http\ApiControllerAbstract;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 
 #[AsController]
-class ProductController extends ApiController
+class ProductController extends ApiControllerAbstract
 {
     public function __construct(
         private readonly QueryBus $queryBus
@@ -25,18 +24,8 @@ class ProductController extends ApiController
     {
         $alias = $request->attributes->get('alias');
 
-        try {
-            /** @var ProductResponse $response */
-            $response = $this->queryBus->ask(new FindProductByAliasQuery($alias));
-        } catch (ProductNotFoundException $exception) {
-            return new JsonResponse(
-                [
-                    'message' => $exception->getMessage(),
-                    'code' => $exception->getCode(),
-                ],
-                404
-            );
-        }
+        /** @var ProductResponse $response */
+        $response = $this->queryBus->ask(new FindProductByAliasQuery($alias));
 
         return new JsonResponse(
             [
