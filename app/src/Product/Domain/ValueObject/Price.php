@@ -8,5 +8,4 @@ use Acme\Shared\Domain\ValueObject\Money;
 
 class Price extends Money
 {
-
 }

@@ -10,7 +10,6 @@ use Acme\Shared\Infrastructure\Mongo\MongoRepository;
 
 class MongoProductRepository extends MongoRepository implements ProductRepositoryInterface
 {
-
     public function findByAlias(string $alias): ?Product
     {
         return $this->documentManager()->createQueryBuilder(Product::class)

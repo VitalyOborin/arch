@@ -8,7 +8,6 @@ use Acme\Shared\Domain\Bus\Command\CommandBus;
 use Acme\Shared\Domain\Bus\Query\QueryBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Attribute\AsController;
 
 abstract class ApiController
 {

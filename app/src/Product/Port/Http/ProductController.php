@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Acme\Product\Port\Http;
 
 use Acme\Product\Application\Query\FindProductByAlias\FindProductByAliasQuery;
