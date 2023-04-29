@@ -69,7 +69,9 @@
     },
     "scripts": {
         "tests": "bin/phpunit",
-        "cs-fix": "php vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix -v"
+        "cs-fix": "php vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix -v",
+        "psalm": "./vendor/bin/psalm --show-info=true",
+        "psalm-fix": "./vendor/bin/psalm --show-info=true --alter --issues=PossiblyUnusedMethod --dry-run"
     },
     "conflict": {
         "symfony/symfony": "*"
