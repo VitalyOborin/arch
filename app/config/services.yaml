@@ -13,7 +13,7 @@ services:
                 - { name: messenger.message_handler, bus: query.bus }
         Acme\Shared\Domain\Bus\Command\CommandHandler:
             tags:
-                - { name: messenger.message_handler, bus: query.bus }
+                - { name: messenger.message_handler, bus: command.bus }
 
     Acme\:
         resource: '../src/'

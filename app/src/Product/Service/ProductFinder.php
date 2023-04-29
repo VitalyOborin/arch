@@ -8,13 +8,13 @@ use Acme\Product\Domain\ProductRepositoryInterface;
 use Acme\Product\Domain\Exception\ProductNotFoundException;
 use Acme\Product\Domain\Product;
 
-class ProductFinderByAlias
+class ProductFinder
 {
     public function __construct(private readonly ProductRepositoryInterface $repository)
     {
     }
 
-    public function find(string $alias): Product
+    public function findByAlias(string $alias): Product
     {
         $product = $this->repository->findByAlias($alias);
 

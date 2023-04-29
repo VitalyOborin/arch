@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acme\Shared\Infrastructure\Bus;
+namespace Acme\Shared\Infrastructure\Bus\Query;
 
 use Acme\Shared\Domain\Bus\Query\Query;
 use RuntimeException;

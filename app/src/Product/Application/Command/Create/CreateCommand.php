@@ -2,24 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Acme\Product\Domain;
+namespace Acme\Product\Application\Command\Create;
 
 use Acme\Product\Domain\ValueObject\Price;
-use Acme\Shared\Domain\Aggregate\AggregateRoot;
+use Acme\Shared\Domain\Bus\Command\Command;
 
-class Product extends AggregateRoot
+class CreateCommand implements Command
 {
     public function __construct(
         private readonly string $id,
         private readonly string $alias,
         private readonly string $name,
-        private readonly Price $price
+        private readonly Price $price,
     ) {
-    }
-
-    public static function create(string $id, string $alias, string $name, Price $price): self
-    {
-        return new self($id, $alias, $name, $price); // todo es
     }
 
     public function id(): string
@@ -37,8 +32,8 @@ class Product extends AggregateRoot
         return $this->name;
     }
 
-    public function price(): string
+    public function price(): Price
     {
-        return (string)$this->price;
+        return $this->price;
     }
 }
