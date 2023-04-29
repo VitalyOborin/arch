@@ -4,8 +4,7 @@
                     http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
 
     <document name="Acme\Product\Domain\Product" db="symfony" collection="products">
-        <!--id strategy="UUID" type="product_uuid" /-->
-        <id type="string" />
+        <id strategy="none" type="string" />
         <field field-name="alias" type="string" />
         <field field-name="name" type="string" />
         <embed-one field="price" target-document="Acme\Product\Domain\ValueObject\Price" />

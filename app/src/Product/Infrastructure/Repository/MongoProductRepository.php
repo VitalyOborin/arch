@@ -12,9 +12,18 @@ class MongoProductRepository extends MongoRepository implements ProductRepositor
 {
     public function findByAlias(string $alias): ?Product
     {
-        return $this->documentManager()->createQueryBuilder(Product::class)
+        /** @var $product Product|null */
+        $product = $this->dm->createQueryBuilder(Product::class)
             ->field('alias')->equals($alias)
             ->getQuery()
             ->getSingleResult();
+
+        return $product;
+    }
+
+    public function save(Product $product): void
+    {
+        $this->dm->persist($product);
+        $this->dm->flush();
     }
 }

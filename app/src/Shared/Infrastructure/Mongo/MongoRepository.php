@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 
 abstract class MongoRepository
 {
-    public function __construct(private readonly DocumentManager $dm)
+    public function __construct(protected readonly DocumentManager $dm)
     {
     }
 

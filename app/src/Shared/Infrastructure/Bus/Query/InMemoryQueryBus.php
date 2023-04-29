@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Acme\Shared\Infrastructure\Bus;
+namespace Acme\Shared\Infrastructure\Bus\Query;
 
 use Acme\Shared\Domain\Bus\Query\Query;
 use Acme\Shared\Domain\Bus\Query\QueryBus;
@@ -11,7 +11,7 @@ use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
-class MessengerQueryBus implements QueryBus
+class InMemoryQueryBus implements QueryBus
 {
     public function __construct(private readonly MessageBusInterface $queryBus)
     {
